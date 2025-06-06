@@ -26,9 +26,9 @@ Repositorio que documenta el desarrollo completo de un sistema **pick and pl
 Este proyecto demuestra el flujo de trabajo típico para integrar un entorno de simulación 3D, un PLC virtual, un SCADA industrial y hardware externo:
 
 * **Factory IO** proporciona la escena 3D con transportador de estibas, carrusel de piezas y robot XYZ.
-* **Machine Expert Basic** ejecuta la lógica PLC (secuenciación automática, gestión de alarmas y seguridad).
+* **Machine Expert Basic** ejecuta la lógica PLC (secuenciación automática y control manual).
 * **InduSoft Web Studio** presenta la interfaz HMI/SCADA para supervisión, registro de datos y control manual.
-* **Arduino + Joystick** permite mover el robot en modo manual enviando variables analógicas al SCADA a través de OPC/LinkMQTT.
+* **Arduino + Joystick** permite mover el robot en modo manual enviando variables analógicas al SCADA a través de TX/RX.
 
 ![Diagrama de arquitectura](doc/assets/architecture_diagram.png)
 
@@ -58,14 +58,14 @@ flowchart TB
 
 ## Requisitos
 
-| Software / Hardware  | Versión recomendada  |
-| -------------------- | -------------------- |
-| Factory IO           | ≥ 2.5                |
-| Machine Expert Basic | ≥ 1.3 SP1            |
-| InduSoft Web Studio  | 8.1 / Studio 2020    |
-| Arduino IDE          | ≥ 2.0                |
-| Arduino UNO / Nano   | ATmega328P           |
-| Joystick XY          | Potenciómetros 10 kΩ |
+| Software / Hardware  | 
+| -------------------- |
+| Factory IO           | 
+| Machine Expert Basic | 
+| InduSoft Web Studio  | 
+| Arduino IDE          | 
+| Arduino UNO / Nano   | 
+| Joystick XY          | 
 
 > **Nota:** se probó en Windows 10 x64. Ajuste rutas y puertos COM según su entorno.
 
@@ -155,7 +155,7 @@ End Sub
 
 ¡Las contribuciones son bienvenidas! Por favor realice un *fork* del repositorio y envíe un *pull request* siguiendo la guía de estilo incluida en `CONTRIBUTING.md`.
 
-## Licencia
+## Autor
 
-Distribuido bajo la licencia MIT. Consulte `LICENSE` para más detalles.
+Juan Carlos Aguirre 
 
