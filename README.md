@@ -32,30 +32,6 @@ Este proyecto demuestra el flujo de trabajo típico para integrar un entorno de 
 
 ![Diagrama de arquitectura](doc/assets/architecture_diagram.png)
 
-## Arquitectura del sistema
-
-```mermaid
-flowchart TB
-  subgraph Simulación & Control
-    FIO[Factory IO\nEscena Pick & Place]
-    PLC[Machine Expert Basic\n(STU proyecto)]
-    FIO <--> PLC
-  end
-
-  subgraph Supervisión
-    SCADA[InduSoft Web Studio\nAplicación HMI]
-  end
-
-  subgraph Hardware externo
-    Arduino[(Arduino UNO)]
-    Joystick((Joystick 2 axes))
-  end
-
-  PLC <--> SCADA
-  Arduino <--> SCADA
-  Joystick --> Arduino
-```
-
 ## Requisitos
 
 | Software / Hardware  | 
