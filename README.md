@@ -1,137 +1,126 @@
 # SCADA-PICK-AND-PLACE-XYZ
 
-![Vista general](doc/assets/factory_io_scene.png)
+<p align="left">
+  <a href="YOUR_YOUTUBE_VIDEO_LINK_HERE" target="_blank">
+    <button>Watch Project Video</button>
+  </a>
+</p>
 
-Repositorio que documenta el desarrollo completo de un sistema **pick and place XYZ** simulado en **Factory IO**, programado en **Machine Expert Basic** y supervisado mediante **SCADA InduSoft Web Studio**. El proyecto incorpora un **Arduino** para lectura de un **joystick analógico**, permitiendo el control manual del manipulador en tiempo real.
+![Overview](doc/assets/factory_io_scene.png)
+
+Repository that documents the complete development of an **XYZ pick-and-place system** simulated in **Factory IO**, programmed in **Machine Expert Basic**, and supervised with **SCADA InduSoft Web Studio**. The project includes an **Arduino** to read an **analog joystick**, allowing real-time manual control of the manipulator.
 
 ---
 
-## Índice
+## Table of Contents
 
-1. [Descripción general](#descripción-general)
-2. [Arquitectura del sistema](#arquitectura-del-sistema)
-3. [Requisitos](#requisitos)
-4. [Estructura del repositorio](#estructura-del-repositorio)
-5. [Puesta en marcha](#puesta-en-marcha)
+1. [Overview](#overview)
+2. [System Architecture](#system-architecture)
+3. [Requirements](#requirements)
+4. [Repository Structure](#repository-structure)
+5. [Startup](#startup)
 6. [SCADA InduSoft](#scada-indusoft)
-7. [Modos de operación](#modos-de-operación)
-8. [Mapeo de variables](#mapeo-de-variables)
-9. [Contribuciones](#contribuciones)
-10. [Licencia](#licencia)
+7. [Operating Modes](#operating-modes)
+8. [Variable Mapping](#variable-mapping)
+9. [Contributions](#contributions)
+10. [License](#license)
 
 ---
 
-## Descripción general
+## Overview
 
-Este proyecto demuestra el flujo de trabajo típico para integrar un entorno de simulación 3D, un PLC virtual, un SCADA industrial y hardware externo:
+This project shows the typical workflow to integrate a 3D simulation environment, a virtual PLC, an industrial SCADA system, and external hardware:
 
-* **Factory IO** proporciona la escena 3D con transportador de estibas, carrusel de piezas y robot XYZ.
-* **Machine Expert Basic** ejecuta la lógica PLC (secuenciación automática y control manual).
-* **InduSoft Web Studio** presenta la interfaz HMI/SCADA para supervisión, registro de datos y control manual.
-* **Arduino + Joystick** permite mover el robot en modo manual enviando variables analógicas al SCADA a través de TX/RX.
+* **Factory IO** provides the 3D scene with a pallet conveyor, parts carousel, and XYZ robot.
+* **Machine Expert Basic** runs the PLC logic (automatic sequence and manual control).
+* **InduSoft Web Studio** provides the HMI/SCADA interface for supervision, data logging, and manual control.
+* **Arduino + Joystick** allows moving the robot in manual mode by sending analog variables to the SCADA through TX/RX.
 
-![Diagrama de arquitectura](doc/assets/architecture_diagram.png)
+![Architecture Diagram](doc/assets/architecture_diagram.png)
 
-## Requisitos
+## Requirements
 
-| Software / Hardware  | 
+| Software / Hardware  |
 | -------------------- |
-| Factory IO           | 
-| Machine Expert Basic | 
-| InduSoft Web Studio  | 
-| Arduino IDE          | 
-| Arduino UNO / Nano   | 
-| Joystick XY          | 
+| Factory IO           |
+| Machine Expert Basic |
+| InduSoft Web Studio  |
+| Arduino IDE          |
+| Arduino UNO / Nano   |
+| XY Joystick          |
 
-> **Nota:** se probó en Windows 10 x64. Ajuste rutas y puertos COM según su entorno.
+> **Note:** Tested on Windows 10 x64. Adjust paths and COM ports according to your environment.
 
-## Estructura del repositorio
+## Repository Structure
 
-```
-📁 factory_io/
-   └─ PickAndPlaceXYZ.scene       # Escena 3D
-📁 plc_project/
-   └─ PickAndPlaceXYZ.stu         # Proyecto MEB
-📁 scada/
+```text
+factory_io/
+   └─ PickAndPlaceXYZ.scene       # 3D scene
+plc_project/
+   └─ PickAndPlaceXYZ.stu         # MEB project
+scada/
    ├─ App/                        # Screens, tags, scripts
    └─ README_SCADA.md
-📁 arduino/
-   └─ joystick_control.ino        # Firmware Arduino
-📁 doc/
-   └─ assets/                     # Imágenes y diagramas
-└─ README.md                      # (este archivo)
-```
+arduino/
+   └─ joystick_control.ino        # Arduino firmware
+doc/
+   └─ assets/                     # Images and diagrams
+README.md                         # (this file)
 
-## Puesta en marcha
+## Startup
 
-### 1. Clonar y abrir los proyectos
+1. In **Factory IO**: Open `factory_io/PickAndPlaceXYZ.scene` and configure OPC DA communication.
+2. In **Machine Expert Basic**: Import `plc_project/PickAndPlaceXYZ.stu`, compile it, and download it to the virtual PLC.
+3. In **InduSoft**: Compile and run the application in `scada/`.
+4. In **Arduino IDE**: Upload `arduino/joystick_control.ino` and select the correct port.
 
-```bash
-git clone https://github.com/usuario/PickAndPlaceXYZ.git
-cd PickAndPlaceXYZ
-```
+### 1. Configure communications
 
-1. En **Factory IO**: Abra `factory_io/PickAndPlaceXYZ.scene` y configure la comunicación OPC DA.
-2. En **Machine Expert Basic**: Importe `plc_project/PickAndPlaceXYZ.stu`, compile y descargue al PLC virtual.
-3. En **InduSoft**: Compile y ejecute la aplicación contenida en `scada/`.
-4. En **Arduino IDE**: Cargue `arduino/joystick_control.ino` y seleccione el puerto adecuado.
+* **OPC Server**: Use the Factory IO OPC server or the MEB OPC server and register the tags.
+* **InduSoft**: Link the tags to the OPC driver (DA/UA) and verify `Good` quality.
+* **Arduino**: Sends variables to InduSoft through Modbus-RTU or MQTT (see firmware).
 
-### 2. Configurar comunicaciones
+### 2. Run
 
-* **OPC Server**: Use el servidor OPC de Factory IO o el de MEB y registre los tags.
-* **InduSoft**: Vincule los tags al driver OPC (DA/UA) y verifique calidad “Good”.
-* **Arduino**: Envía variables a InduSoft vía Modbus-RTU o MQTT (ver firmware).
-
-### 3. Ejecutar
-
-1. Inicie la escena en Factory IO.
-2. Ejecute el PLC desde Machine Expert Basic (Run).
-3. Levante la aplicación SCADA (Viewer.exe).
-4. Mueva el joystick: los valores analógicos cambiarán las variables `JOY_X` y `JOY_Y`, traducidas a velocidades del eje correspondiente.
+1. Start the scene in Factory IO.
+2. Run the PLC from Machine Expert Basic (Run).
+3. Start the SCADA application (`Viewer.exe`).
+4. Move the joystick: the analog values will change the `JOY_X` and `JOY_Y` variables, converted into speed values for the corresponding axis.
 
 ## SCADA InduSoft
 
-La interfaz incluye:
+The interface includes:
 
-* **Pantalla de navegación** con modos `AUTO` y `MANUAL`.
-* **Vista de la célula** con bandas, sensores fotoeléctricos y estado del robot.
-* **Panel de joystick virtual** que replica las lecturas analógicas.
-* **Historial de alarmas** y **tendencias** de producción.
+* **Navigation screen** with `AUTO` and `MANUAL` modes.
+* **Cell view** with conveyors, photoelectric sensors, and robot status.
+* **Virtual joystick panel** that mirrors the analog readings.
+* **Alarm history** and **production trends**.
 
-Scripts clave:
+## Operating Modes
 
-```vbscript
-' Cambio de color (ejemplo solicitado)
-Sub ToggleColor()
-    If COLOR_SCADA = 0 Then
-        COLOR_SCADA = 1
-    Else
-        COLOR_SCADA = 0
-    End If
-End Sub
-```
+| Mode              | Description                                               | Activation                               |
+| ----------------- | --------------------------------------------------------- | ---------------------------------------- |
+| Automatic         | PLC fully controls the pallet and robot sequence.         | `AUTO_MODE = TRUE`                       |
+| Manual (Joystick) | Operator moves XYZ axes proportionally with the joystick. | `AUTO_MODE = FALSE` & Joystick connected |
 
-## Modos de operación
+## Variable Mapping
 
-| Modo              | Descripción                                                 | Activación                               |
-| ----------------- | ----------------------------------------------------------- | ---------------------------------------- |
-| Automático        | PLC controla completamente la secuencia de estibas y robot. | `AUTO_MODE = TRUE`                       |
-| Manual (Joystick) | Operador mueve ejes XYZ proporcionalmente al joystick.      | `AUTO_MODE = FALSE` & Joystick conectado |
+| SCADA Tag     | PLC (%MW) | Arduino | Description       |
+| ------------- | --------- | ------- | ----------------- |
+| `JOY_X`       | `%MW0`    | `A0`    | Joystick X axis   |
+| `JOY_Y`       | `%MW1`    | `A1`    | Joystick Y axis   |
+| `COLOR_SCADA` | `%M100.0` | `N/A`   | Color selection   |
+| `CNT_PIEZAS`  | `%MW10`   | `N/A`   | Parts counter     |
 
-## Mapeo de variables
+## Contributions
 
-| Tag SCADA    | PLC (%MW) | Arduino | Descripción        |
-| ------------ | --------- | ------- | ------------------ |
-| JOY\_X       | %MW0      | A0      | Eje X joystick     |
-| JOY\_Y       | %MW1      | A1      | Eje Y joystick     |
-| COLOR\_SCADA | %M100.0   | N/A     | Selección de color |
-| CNT\_PIEZAS  | %MW10     | N/A     | Contador de piezas |
+Add your contribution guidelines here.
 
-## Contribuciones
+## License
 
-¡Las contribuciones son bienvenidas! Por favor realice un *fork* del repositorio y envíe un *pull request* siguiendo la guía de estilo incluida en `CONTRIBUTING.md`.
+Add your license information here.
 
-## Autor
+## Author
 
-Juan Carlos Aguirre 
+Juan Carlos Aguirre
 
