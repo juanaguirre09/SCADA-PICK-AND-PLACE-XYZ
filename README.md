@@ -1,12 +1,11 @@
 # SCADA-PICK-AND-PLACE-XYZ
 
 <p align="left">
-  <a href="YOUR_YOUTUBE_VIDEO_LINK_HERE" target="_blank">
-    <button>Watch Project Video</button>
+  <a href="https://youtu.be/0eFAJq77qtM" target="_blank">
+    <img src="https://img.shields.io/badge/Watch%20Project%20Video-YouTube-red?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch Project Video">
   </a>
 </p>
 
-![Overview](doc/assets/factory_io_scene.png)
 
 Repository that documents the complete development of an **XYZ pick-and-place system** simulated in **Factory IO**, programmed in **Machine Expert Basic**, and supervised with **SCADA InduSoft Web Studio**. The project includes an **Arduino** to read an **analog joystick**, allowing real-time manual control of the manipulator.
 
@@ -24,6 +23,7 @@ Repository that documents the complete development of an **XYZ pick-and-place sy
 8. [Variable Mapping](#variable-mapping)
 9. [Contributions](#contributions)
 10. [License](#license)
+11. [Author](#author)
 
 ---
 
@@ -38,6 +38,17 @@ This project shows the typical workflow to integrate a 3D simulation environment
 
 ![Architecture Diagram](doc/assets/architecture_diagram.png)
 
+## System Architecture
+
+This project integrates the following components:
+
+* **Factory IO** as the 3D simulation environment for the industrial cell.
+* **Machine Expert Basic** as the PLC programming and execution platform.
+* **InduSoft Web Studio** as the HMI/SCADA layer for monitoring and control.
+* **Arduino + Joystick** as the manual input device for real-time manipulator movement.
+
+The communication flow links the simulator, PLC, SCADA, and external joystick input into a single supervised control system.
+
 ## Requirements
 
 | Software / Hardware  |
@@ -50,22 +61,6 @@ This project shows the typical workflow to integrate a 3D simulation environment
 | XY Joystick          |
 
 > **Note:** Tested on Windows 10 x64. Adjust paths and COM ports according to your environment.
-
-## Repository Structure
-
-```text
-factory_io/
-   └─ PickAndPlaceXYZ.scene       # 3D scene
-plc_project/
-   └─ PickAndPlaceXYZ.stu         # MEB project
-scada/
-   ├─ App/                        # Screens, tags, scripts
-   └─ README_SCADA.md
-arduino/
-   └─ joystick_control.ino        # Arduino firmware
-doc/
-   └─ assets/                     # Images and diagrams
-README.md                         # (this file)
 
 ## Startup
 
@@ -96,31 +91,15 @@ The interface includes:
 * **Virtual joystick panel** that mirrors the analog readings.
 * **Alarm history** and **production trends**.
 
-## Operating Modes
+Key scripts:
 
-| Mode              | Description                                               | Activation                               |
-| ----------------- | --------------------------------------------------------- | ---------------------------------------- |
-| Automatic         | PLC fully controls the pallet and robot sequence.         | `AUTO_MODE = TRUE`                       |
-| Manual (Joystick) | Operator moves XYZ axes proportionally with the joystick. | `AUTO_MODE = FALSE` & Joystick connected |
-
-## Variable Mapping
-
-| SCADA Tag     | PLC (%MW) | Arduino | Description       |
-| ------------- | --------- | ------- | ----------------- |
-| `JOY_X`       | `%MW0`    | `A0`    | Joystick X axis   |
-| `JOY_Y`       | `%MW1`    | `A1`    | Joystick Y axis   |
-| `COLOR_SCADA` | `%M100.0` | `N/A`   | Color selection   |
-| `CNT_PIEZAS`  | `%MW10`   | `N/A`   | Parts counter     |
-
-## Contributions
-
-Add your contribution guidelines here.
-
-## License
-
-Add your license information here.
-
-## Author
-
-Juan Carlos Aguirre
+```vbscript
+' Color change (requested example)
+Sub ToggleColor()
+    If COLOR_SCADA = 0 Then
+        COLOR_SCADA = 1
+    Else
+        COLOR_SCADA = 0
+    End If
+End Sub
 
