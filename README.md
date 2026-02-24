@@ -11,22 +11,6 @@ Repository that documents the complete development of an **XYZ pick-and-place sy
 
 ---
 
-## Table of Contents
-
-1. [Overview](#overview)
-2. [System Architecture](#system-architecture)
-3. [Requirements](#requirements)
-4. [Repository Structure](#repository-structure)
-5. [Startup](#startup)
-6. [SCADA InduSoft](#scada-indusoft)
-7. [Operating Modes](#operating-modes)
-8. [Variable Mapping](#variable-mapping)
-9. [Contributions](#contributions)
-10. [License](#license)
-11. [Author](#author)
-
----
-
 ## Overview
 
 This project shows the typical workflow to integrate a 3D simulation environment, a virtual PLC, an industrial SCADA system, and external hardware:
@@ -35,8 +19,6 @@ This project shows the typical workflow to integrate a 3D simulation environment
 * **Machine Expert Basic** runs the PLC logic (automatic sequence and manual control).
 * **InduSoft Web Studio** provides the HMI/SCADA interface for supervision, data logging, and manual control.
 * **Arduino + Joystick** allows moving the robot in manual mode by sending analog variables to the SCADA through TX/RX.
-
-![Architecture Diagram](doc/assets/architecture_diagram.png)
 
 ## System Architecture
 
